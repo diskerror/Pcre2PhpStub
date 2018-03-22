@@ -9,10 +9,10 @@ In PHP, the PCRE functions:
 $subject = 'abacadabra';
 $result = pcre_replace('/a/u', ' ', $subject); //  ' b c d br '
 
-$result = pcre_match('/a/u', $subject);  //  true
+$result = pcre_match('/a/u', $subject);  //  1
 
 $matches = [];
-$result = pcre_match('/a/u', $subject, $matches);  //  true
+$result = pcre_match('/a/u', $subject, $matches);  //  1
 print_r($matches);  //  ['a', 'a']
 ```
 are equivalent to this in this PCRE2 implimentation:
