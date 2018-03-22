@@ -36,6 +36,7 @@ class Matcher extends Pcre2Abstract
 		if ($hasMatch === false) {
 			throw new Exception('preg_match returned "false" (an error occurred)');
 		}
+		//	Else $hasMatch is a 0 or 1.
 
 		return (bool)$hasMatch;
 	}
@@ -52,10 +53,10 @@ class Matcher extends Pcre2Abstract
 	 */
 	public function match($subject, &$matches, $offset = 0)
 	{
-		$matchCount = preg_match_all($this->_regex, $subject, $matches, $this->_opts, $offset);
+		$matchCount = preg_match($this->_regex, $subject, $matches, $this->_opts, $offset);
 
 		if ($matchCount === false) {
-			throw new Exception('preg_match_all returned "false"');
+			throw new Exception('preg_match returned "false"');
 		}
 
 		return $matchCount;

@@ -31,9 +31,9 @@ class Replacer extends Pcre2Abstract
 	 * @param string  $replacement OPTIONAL ''
 	 * @param integer $options     OPTIONAL 0
 	 */
-	public function __construct($expression, $replacement = '', $options = PREG_PATTERN_ORDER)
+	public function __construct($expression, $replacement = '', $options = 0)
 	{
-		parent::__construct($expression, $options = PREG_PATTERN_ORDER);
+		parent::__construct($expression, $options);
 		$this->setReplacement($replacement);
 	}
 

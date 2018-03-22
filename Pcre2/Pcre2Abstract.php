@@ -10,7 +10,6 @@
 namespace Diskerror\Pcre2;
 
 use Diskerror\Pcre2;
-use const PHP_EOL;
 
 /**
  * Class Pcre2Abstract
@@ -33,7 +32,7 @@ abstract class Pcre2Abstract
 	 * Constructor.
 	 *
 	 * @param string  $expression
-	 * @param integer $options OPTIONAL 0
+	 * @param integer $options OPTIONAL
 	 */
 	public function __construct($expression, $options = 0)
 	{
