@@ -27,6 +27,10 @@ class ClassTest extends PHPUnit\Framework\TestCase
 		$r = new \Diskerror\Pcre2\Replacer('(.{4}.*)', '\\1');
 
 		$this->assertEquals($r->replace('asdfs'), 'asdfs');
+
+		$r = new \Diskerror\Pcre2\Replacer('(.{4}).*', '\\1', \Diskerror\Pcre2::UTF);
+
+		$this->assertEquals($r->replace('asdfs'), 'asdf');
 	}
 
 }
