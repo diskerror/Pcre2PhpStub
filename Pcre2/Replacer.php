@@ -28,8 +28,8 @@ class Replacer extends Pcre2Abstract
 	 * Constructor.
 	 *
 	 * @param string  $expression
-	 * @param string  $replacement OPTIONAL ''
-	 * @param integer $options     OPTIONAL 0
+	 * @param string  $replacement OPTIONAL
+	 * @param integer $options     OPTIONAL
 	 */
 	public function __construct($expression, $replacement = '', $options = 0)
 	{
