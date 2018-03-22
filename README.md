@@ -4,27 +4,31 @@ Version 0.3 is a work in progress. Pcre2PhpEx is still at v0.2.
 These are fully function stub classes for PHP which mimic the behavior of the compiled PCRE2 extension. This project starts at version 0.3 which corresponds to version 0.3 of the project Pcre2PhpEx.
 
 ## Usage
-In PHP, the PCRE functions:
+In PHP, the PCRE functions (from PHPUnit object):
 ```
 $subject = 'abacadabra';
-$result = pcre_replace('/a/u', ' ', $subject); //  ' b c d br '
+$result = preg_replace('/a/u', ' ', $subject);
+$this->assertEquals($result, ' b c d br ');
 
-$result = pcre_match('/a/u', $subject);  //  1
+$result = (bool)preg_match('/a/u', $subject);
+$this->assertTrue($result);
 
 $matches = [];
-$result = pcre_match('/a/u', $subject, $matches);  //  1
-print_r($matches);  //  ['a', 'a']
+$result = preg_match('/a/u', $subject, $matches);  //  1
+$this->assertEquals($matches, ['a']);
 ```
 are equivalent to this in this PCRE2 implimentation:
 ```
 $subject = 'abacadabra';
-$replacer = \Diskerror\Pcre2\Replacer('a', ' ', \Diskerror\Pcre2::UTF);
-$result = $replacer->replace($subject);  //  ' b c d br '
+$replacer = new \Diskerror\Pcre2\Replacer('a', ' ', \Diskerror\Pcre2::UTF);
+$result = $replacer->replace($subject);
+$this->assertEquals($result, ' b c d br ');
 
-$matcher = \Diskerror\Pcre2\Matcher('a', \Diskerror\Pcre2::UTF);
-$result = $matcher->hasMatch($subject);  //  true
+$matcher = new \Diskerror\Pcre2\Matcher('a', \Diskerror\Pcre2::UTF);
+$result = $matcher->hasMatch($subject);
+$this->assertTrue($result);
 
 $matches = [];
 $count = $matcher->match($subject, $matches);  //  "$matcher" from above
-print_r($matches);  //  ['a', 'a']
+$this->assertEquals($matches, ['a']);
 ```
