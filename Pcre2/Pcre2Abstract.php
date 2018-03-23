@@ -18,9 +18,9 @@ use Diskerror\Pcre2;
 abstract class Pcre2Abstract
 {
 	/**
-	 * @var integer
+	 * @var Flags
 	 */
-	protected $_opts;
+	public $flags;
 
 	/**
 	 * Regular expression string.
@@ -31,57 +31,68 @@ abstract class Pcre2Abstract
 	/**
 	 * Constructor.
 	 *
-	 * @param string  $expression
-	 * @param integer $options OPTIONAL
+	 * @param string  $expression OPTIONAL
+	 * @param integer $flags      OPTIONAL
 	 */
-	public function __construct($expression, $options = 0)
+	public function __construct(string $expression = '', int $flags = null)
 	{
-		$this->compile($expression, $options);
+		$this->flags = ($flags === null || $flags === 0) ? new Flags() : new Flags($flags);
+
+		$this->compile($expression);
 	}
 
 	/**
 	 * Convert a regular expression into machine code.
 	 * Do not use delimimeters at start and end of string.
 	 *
+	 * Applying options here will cause any existing options to be cleared, if set.
+	 *
 	 * @param $expression
-	 * @param $options
+	 * @param $flags
 	 */
-	public function compile($expression, $options)
+	public function compile(string $expression, int $flags = null) : void
 	{
-		$this->_opts = $options;
+		if ($flags !== null) {
+			$this->flags->set($flags);
+		}
+
+		if ($expression === ''){
+			$this->_regex = '//';
+			return;
+		}
 
 		//	Pcre2 will change the expression into machine code.
 		$this->_regex = '/' . strtr($expression, ['/' => '\\/']) . '/';
 
-		if ($this->_opts & Pcre2::CASELESS) {
+		if ($this->flags->hasFlag(Pcre2::CASELESS)) {
 			$this->_regex .= 'i';
 		}
 
-		if ($this->_opts & Pcre2::MULTILINE) {
+		if ($this->flags->hasFlag(Pcre2::MULTILINE)) {
 			$this->_regex .= 'm';
 		}
 
-		if ($this->_opts & Pcre2::DOTALL) {
+		if ($this->flags->hasFlag(Pcre2::DOTALL)) {
 			$this->_regex .= 's';
 		}
 
-		if ($this->_opts & Pcre2::EXTENDED) {
+		if ($this->flags->hasFlag(Pcre2::EXTENDED)) {
 			$this->_regex .= 'x';
 		}
 
-		if ($this->_opts & Pcre2::ANCHORED) {
+		if ($this->flags->hasFlag(Pcre2::ANCHORED)) {
 			$this->_regex .= 'A';
 		}
 
-		if ($this->_opts & Pcre2::DOLLAR_ENDONLY) {
+		if ($this->flags->hasFlag(Pcre2::DOLLAR_ENDONLY)) {
 			$this->_regex .= 'D';
 		}
 
-		if ($this->_opts & Pcre2::UNGREEDY) {
+		if ($this->flags->hasFlag(Pcre2::UNGREEDY)) {
 			$this->_regex .= 'U';
 		}
 
-		if ($this->_opts & Pcre2::UTF) {
+		if ($this->flags->hasFlag(Pcre2::UTF)) {
 			$this->_regex .= 'u';
 		}
 	}

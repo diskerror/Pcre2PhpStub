@@ -1,7 +1,8 @@
 <?php
 /**
  * Functional stub for Pcre2PhpEx compiled extension.
- * The extension preprocesses the REGEX string.
+ * This extension precompiles the REGEX string.
+ *
  * @name           Pcre2
  * @copyright      Copyright (c) 2018 Reid Woodbury Jr.
  * @license        http://www.apache.org/licenses/LICENSE-2.0.html	Apache License, Version 2.0
@@ -48,17 +49,17 @@ class Pcre2
 	const EXTENDED_MORE       = 0x01000000;
 	const LITERAL             = 0x02000000;    //	Pattern characters are all literal
 
-	//	Options available to match and replace.
+	//	Options available to match and replace methods.
 //	const NOTBOL           = 0x00000001;	//	Subject string is not the beginning of a line
 //	const NOTEOL           = 0x00000002;	//	Subject string is not the end of a line
 //	const NOTEMPTY         = 0x00000004;	//	An empty string is not a valid match
 //	const NOTEMPTY_ATSTART = 0x00000008;	//	An empty string at the start of the subject is not a valid match
 
-	//	Options available to replace.
+	//	Options available to replace method.
 //	const SUBSTITUTE_GLOBAL          = 0x00000100;  //	Replace all occurrences in the subject
 //	const SUBSTITUTE_EXTENDED        = 0x00000200;  //	Do extended replacement processing
 //	const SUBSTITUTE_UNSET_EMPTY     = 0x00000400;  //	Simple unset insert = empty string
 //	const SUBSTITUTE_UNKNOWN_UNSET   = 0x00000800;  //	Treat unknown group as unset
-//	const SUBSTITUTE_OVERFLOW_LENGTH = 0x00001000;  //	If overflow, compute needed length
+//	const SUBSTITUTE_OVERFLOW_LENGTH = 0x00001000;  //	If overflow, compute needed length   ???
 
 }

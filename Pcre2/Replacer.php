@@ -27,36 +27,36 @@ class Replacer extends Pcre2Abstract
 	/**
 	 * Constructor.
 	 *
-	 * @param string  $expression
+	 * @param string  $expression  OPTIONAL
 	 * @param string  $replacement OPTIONAL
-	 * @param integer $options     OPTIONAL
+	 * @param integer $flags       OPTIONAL
 	 */
-	public function __construct($expression, $replacement = '', $options = 0)
+	public function __construct(string $expression = '', string $replacement = '', int $flags = null)
 	{
-		parent::__construct($expression, $options);
+		parent::__construct($expression, $flags);
 		$this->setReplacement($replacement);
 	}
 
 	/**
-	 * @param $replacement
+	 * @param string $replacement
 	 */
-	public function setReplacement($replacement)
+	public function setReplacement(string $replacement) : void
 	{
 		$this->_replace = $replacement;
 	}
 
 	/**
-	 * Execute and return count of matches of REGEX acting on subject string.
+	 * Execute and return new string.
 	 *
 	 * @param string $subject
-	 * @param int    $offset OPTIONAL 0
+	 * @param int    $offset OPTIONAL
 	 *
 	 * @return string
 	 * @throws Exception
 	 */
-	public function replace($subject, $offset = 0)
+	public function replace(string $subject, int $offset = 0) : string
 	{
-		$newString = preg_replace($this->_regex, $this->_replace, $subject, $this->_opts, $offset);
+		$newString = preg_replace($this->_regex, $this->_replace, $subject, $this->flags->get(), $offset);
 
 		if ($newString === null) {
 			throw new Exception('preg_replace returned "null"');

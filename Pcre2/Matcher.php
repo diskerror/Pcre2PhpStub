@@ -10,6 +10,7 @@
 namespace Diskerror\Pcre2;
 
 use Diskerror\Pcre2\Pcre2Abstract;
+use Diskerror\Pcre2\Flags;
 use Diskerror\Pcre2\Exception;
 
 /**
@@ -28,7 +29,7 @@ class Matcher extends Pcre2Abstract
 	 * @return boolean
 	 * @throws Exception
 	 */
-	public function hasMatch($subject, $offset = 0)
+	public function hasMatch(string $subject, int $offset = 0) : bool
 	{
 		$a = [];
 		$hasMatch = preg_match($this->_regex, $subject, $a, null, $offset);
@@ -51,7 +52,7 @@ class Matcher extends Pcre2Abstract
 	 * @return int
 	 * @throws Exception
 	 */
-	public function match($subject, &$matches, $offset = 0)
+	public function match(string $subject, array &$matches, int $offset = 0) : int
 	{
 		$matchCount = preg_match($this->_regex, $subject, $matches, null, $offset);
 
@@ -73,7 +74,7 @@ class Matcher extends Pcre2Abstract
 	 * @return int
 	 * @throws Exception
 	 */
-	public function matchAll($subject, &$matches, $offset = 0)
+	public function matchAll(string $subject, array &$matches, int $offset = 0) : int
 	{
 		$matchCount = preg_match_all($this->_regex, $subject, $matches, PREG_PATTERN_ORDER, $offset);
 
