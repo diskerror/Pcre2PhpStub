@@ -10,7 +10,7 @@
 namespace Diskerror\Pcre2;
 
 use Diskerror\Pcre2\Pcre2Abstract;
-use Diskerror\Pcre2\Flags;
+use Diskerror\Pcre2\FlagsAbstract;
 use Diskerror\Pcre2\Exception;
 
 /**
