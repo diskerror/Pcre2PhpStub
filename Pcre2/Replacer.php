@@ -11,6 +11,7 @@ namespace Diskerror\Pcre2;
 
 use Diskerror\Pcre2\Pcre2Abstract;
 use Diskerror\Pcre2\Exception;
+use Diskerror\Pcre2\Flags\Replace;
 
 /**
  * Class Replacer
@@ -27,13 +28,19 @@ class Replacer extends Pcre2Abstract
 	/**
 	 * Constructor.
 	 *
-	 * @param string  $expression  OPTIONAL
-	 * @param string  $replacement OPTIONAL
-	 * @param integer $flags       OPTIONAL
+	 * @param string  $expression   OPTIONAL
+	 * @param string  $replacement  OPTIONAL
+	 * @param integer $compileFlags OPTIONAL
+	 * @param integer $replaceFlags OPTIONAL
 	 */
-	public function __construct(string $expression = '', string $replacement = '', int $flags = null)
+	public function __construct(string $expression = '', string $replacement = '', int $compileFlags = null, int $replaceFlags = null)
 	{
-		parent::__construct($expression, $flags);
+		parent::__construct($expression, $compileFlags, $replaceFlags);
+
+		if($replaceFlags === null){
+			$this->matchFlags->add(Replace::GLOBAL);
+		}
+		
 		$this->setReplacement($replacement);
 	}
 
@@ -56,7 +63,7 @@ class Replacer extends Pcre2Abstract
 	 */
 	public function replace(string $subject, int $offset = 0) : string
 	{
-		$newString = preg_replace($this->_regex, $this->_replace, $subject, $this->flags->get(), $offset);
+		$newString = preg_replace($this->_regex, $this->_replace, $subject, -1, $offset);
 
 		if ($newString === null) {
 			throw new Exception('preg_replace returned "null"');
