@@ -40,16 +40,25 @@ class Replacer extends Pcre2Abstract
 		if($replaceFlags === null){
 			$this->matchFlags->add(Replace::GLOBAL);
 		}
-		
+
 		$this->setReplacement($replacement);
 	}
 
 	/**
 	 * @param string $replacement
+	 * @param integer $replaceFlags OPTIONAL
+	 * @return Replacer
 	 */
-	public function setReplacement(string $replacement) : void
+	public function setReplacement(string $replacement, int $replaceFlags = null) : Replacer
 	{
+
+		if($replaceFlags !== null){
+			$this->matchFlags->set($replaceFlags);
+		}
+
 		$this->_replace = $replacement;
+
+		return $this;
 	}
 
 	/**

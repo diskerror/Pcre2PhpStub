@@ -50,6 +50,6 @@ class FlagsBase
 
 	public function hasFlag(int $whichFlag = 0xFFFFFFFF) : bool
 	{
-		return (bool)$this->_flags & $whichFlag;
+		return (bool)$this->get($whichFlag);
 	}
 }

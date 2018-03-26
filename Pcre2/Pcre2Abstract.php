@@ -49,9 +49,9 @@ abstract class Pcre2Abstract
 				new Compile($compileFlags);
 
 		$this->matchFlags =
-			($compileFlags === null) ?
-				new Compile(Match::NOTEMPTY) :
-				new Compile($compileFlags);
+			($matchFlags === null) ?
+				new Match(Match::NOTEMPTY) :
+				new Match($matchFlags);
 
 		$this->compile($expression);
 	}
@@ -63,17 +63,17 @@ abstract class Pcre2Abstract
 	 * Applying options here will cause any existing options to be cleared.
 	 *
 	 * @param $expression
-	 * @param $flags
+	 * @param $flags      OPTIONAL
+	 * @return Pcre2Abstract
 	 */
-	public function compile(string $expression, int $flags = null) : void
+	public function compile(string $expression, int $flags = null) : Pcre2Abstract
 	{
 		if ($flags !== null) {
 			$this->compileFlags->set($flags);
 		}
 
 		if ($expression === '') {
-			$this->_regex = '//';
-			return;
+			throw new Exception('expression cannot be empty');
 		}
 
 		//	Pcre2 will change the expression into machine code.
@@ -110,6 +110,8 @@ abstract class Pcre2Abstract
 		if ($this->compileFlags->hasFlag(Compile::UTF)) {
 			$this->_regex .= 'u';
 		}
+
+		return $this;
 	}
 
 }

@@ -7,7 +7,7 @@ class ClassTest extends PHPUnit\Framework\TestCase
 {
 	public function testHasMatch()
 	{
-		$m = new \Diskerror\Pcre2\Matcher('.{4}.*');
+		$m = new Diskerror\Pcre2\Matcher('.{4}.*');
 
 		$this->assertTrue($m->hasMatch('asdfs'));
 		$this->assertFalse($m->hasMatch('asd'));
@@ -15,7 +15,7 @@ class ClassTest extends PHPUnit\Framework\TestCase
 
 	public function testMatch()
 	{
-		$m = new \Diskerror\Pcre2\Matcher('^.*$');
+		$m = new Diskerror\Pcre2\Matcher('^.*$');
 		$a = [];
 
 		$this->assertEquals(1, $m->match('asdfs', $a));
@@ -24,11 +24,11 @@ class ClassTest extends PHPUnit\Framework\TestCase
 
 	public function testReplacer()
 	{
-		$r = new \Diskerror\Pcre2\Replacer('(.{4}.*)', '\\1');
+		$r = new Diskerror\Pcre2\Replacer('(.{4}.*)', '\\1');
 
 		$this->assertEquals($r->replace('asdfs'), 'asdfs');
 
-		$r = new \Diskerror\Pcre2\Replacer('(.{4}).*', '\\1', \Diskerror\Pcre2::UTF);
+		$r = new Diskerror\Pcre2\Replacer('(.{4}).*', '\\1');
 
 		$this->assertEquals($r->replace('asdfs'), 'asdf');
 	}
@@ -48,11 +48,11 @@ class ClassTest extends PHPUnit\Framework\TestCase
 
 
 		$subject = 'abacadabra';
-		$replacer = new \Diskerror\Pcre2\Replacer('a', ' ', \Diskerror\Pcre2::UTF);
+		$replacer = new Diskerror\Pcre2\Replacer('a', ' ');
 		$result = $replacer->replace($subject);
 		$this->assertEquals($result, ' b c d br ');
 
-		$matcher = new \Diskerror\Pcre2\Matcher('a', \Diskerror\Pcre2::UTF);
+		$matcher = new Diskerror\Pcre2\Matcher('a');
 		$result = $matcher->hasMatch($subject);
 		$this->assertTrue($result);
 
