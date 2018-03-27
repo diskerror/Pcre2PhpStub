@@ -37,6 +37,8 @@ abstract class Pcre2Abstract
 	/**
 	 * Constructor.
 	 *
+	 * Passing "null" for the flags will set default values.
+	 *
 	 * @param string  $expression   OPTIONAL
 	 * @param integer $compileFlags OPTIONAL
 	 * @param integer $matchFlags   OPTIONAL
@@ -45,7 +47,7 @@ abstract class Pcre2Abstract
 	{
 		$this->compileFlags =
 			($compileFlags === null) ?
-				new Compile(Compile::UTF | Compile::DOTALL | Compile::MULTILINE) :
+				new Compile(Compile::UTF) :
 				new Compile($compileFlags);
 
 		$this->matchFlags =

@@ -24,11 +24,11 @@ class ClassTest extends PHPUnit\Framework\TestCase
 
 	public function testReplacer()
 	{
-		$r = new \Diskerror\Pcre2\Replacer('(.{4}.*)', '\\1');
+		$r = new Diskerror\Pcre2\Replacer('(.{4}.*)', '\\1');
 
 		$this->assertEquals($r->replace('asdfs'), 'asdfs');
 
-		$r = new \Diskerror\Pcre2\Replacer('(.{4}).*', '\\1');
+		$r = new Diskerror\Pcre2\Replacer('(.{4}).*', '\\1');
 
 		$this->assertEquals($r->replace('asdfs'), 'asdf');
 	}
@@ -48,11 +48,11 @@ class ClassTest extends PHPUnit\Framework\TestCase
 
 
 		$subject = 'abacadabra';
-		$replacer = new \Diskerror\Pcre2\Replacer('a', ' ');
+		$replacer = new Diskerror\Pcre2\Replacer('a', ' ');
 		$result = $replacer->replace($subject);
 		$this->assertEquals($result, ' b c d br ');
 
-		$matcher = new \Diskerror\Pcre2\Matcher('a');
+		$matcher = new Diskerror\Pcre2\Matcher('a');
 		$result = $matcher->hasMatch($subject);
 		$this->assertTrue($result);
 
