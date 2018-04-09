@@ -16,10 +16,9 @@ class ClassTest extends PHPUnit\Framework\TestCase
 	public function testMatch()
 	{
 		$m = new Diskerror\Pcre2\Matcher('^.*$');
-		$a = [];
 
-		$this->assertEquals(1, $m->match('asdfs', $a));
-		$this->assertEquals('asdfs', $a[0]);
+		$result = $m->match('asdfs');
+		$this->assertEquals('asdfs', $result[0]);
 	}
 
 	public function testReplacer()
@@ -56,8 +55,7 @@ class ClassTest extends PHPUnit\Framework\TestCase
 		$result = $matcher->hasMatch($subject);
 		$this->assertTrue($result);
 
-		$matches = [];
-		$count = $matcher->match($subject, $matches);  //  "$matcher" from above
+		$matches = $matcher->match($subject);  //  "$matcher" from above
 		$this->assertEquals($matches, ['a']);
 	}
 

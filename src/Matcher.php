@@ -43,17 +43,17 @@ class Matcher extends Pcre2Abstract
 	}
 
 	/**
-	 * Execute and return count of matches (0 or 1) of REGEX acting on subject string.
+	 * Execute and return array of matches (0 or 1) of REGEX acting on subject string.
 	 *
 	 * @param string $subject
-	 * @param array  $matches
 	 * @param int    $offset OPTIONAL 0
 	 *
-	 * @return int
+	 * @return array
 	 * @throws Exception
 	 */
-	public function match(string $subject, array &$matches, int $offset = 0) : int
+	public function match(string $subject, int $offset = 0) : array
 	{
+		$matches = [];
 		$matchCount = preg_match($this->_regex, $subject, $matches, null, $offset);
 
 		if ($matchCount === false) {
@@ -61,28 +61,28 @@ class Matcher extends Pcre2Abstract
 		}
 		//	Else $hasMatch is a 0 or 1.
 
-		return $matchCount;
+		return $matches;
 	}
 
 	/**
-	 * Execute and return count of matches of REGEX acting on subject string.
+	 * Execute and return array of matches of REGEX acting on subject string.
 	 *
 	 * @param string $subject
-	 * @param array  $matches
 	 * @param int    $offset OPTIONAL 0
 	 *
-	 * @return int
+	 * @return array
 	 * @throws Exception
 	 */
-	public function matchAll(string $subject, array &$matches, int $offset = 0) : int
+	public function matchAll(string $subject, int $offset = 0) : array
 	{
+		$matches = [];
 		$matchCount = preg_match_all($this->_regex, $subject, $matches, PREG_PATTERN_ORDER, $offset);
 
 		if ($matchCount === false) {
 			throw new Exception('preg_match_all returned "false"');
 		}
 
-		return $matchCount;
+		return $matches;
 	}
 
 }

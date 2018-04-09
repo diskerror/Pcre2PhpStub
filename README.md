@@ -28,7 +28,6 @@ $matcher = new \Diskerror\Pcre2\Matcher('a', \Diskerror\Pcre2::UTF);
 $result = $matcher->hasMatch($subject);
 $this->assertTrue($result);
 
-$matches = [];
-$count = $matcher->match($subject, $matches);  //  "$matcher" from above
+$matches = $matcher->match($subject);  //  "$matcher" from above
 $this->assertEquals($matches, ['a']);
 ```
