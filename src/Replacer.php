@@ -33,13 +33,16 @@ class Replacer extends Pcre2Abstract
 	 */
 	public function __construct(string $regexIn = '', string $replacement = '', int $compileFlags = null, int $matchFlags = null)
 	{
-		parent::__construct($regexIn, $compileFlags, $matchFlags);
+		$this->setReplacement($replacement);
 
-		if ($matchFlags === null) {
-			$this->matchFlags->add(Replace::GLOBAL);
+		if ($this->matchFlags === null) {
+			$this->matchFlags =
+				($matchFlags === null) ?
+					new Replace(Replace::NOTEMPTY | Replace::GLOBAL) :
+					new Replace($matchFlags);
 		}
 
-		$this->setReplacement($replacement);
+		parent::__construct($regexIn, $compileFlags, $matchFlags);
 	}
 
 	/**

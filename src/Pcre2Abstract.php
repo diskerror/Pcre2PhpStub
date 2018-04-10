@@ -22,12 +22,12 @@ abstract class Pcre2Abstract
 	/**
 	 * @var Flags\Compile
 	 */
-	public $compileFlags;
+	public $compileFlags = null;
 
 	/**
 	 * @var Flags\Match
 	 */
-	public $matchFlags;
+	public $matchFlags = null;
 
 	/**
 	 * Regular expression string.
@@ -62,15 +62,19 @@ abstract class Pcre2Abstract
 		$this->_regexStringChanged = false;
 		$this->_regex_compiled = '';
 
-		$this->compileFlags =
-			($compileFlags === null) ?
-				new Compile(Compile::UTF) :
-				new Compile($compileFlags);
+		if ($this->compileFlags === null) {
+			$this->compileFlags =
+				($compileFlags === null) ?
+					new Compile(Compile::UTF) :
+					new Compile($compileFlags);
+		}
 
-		$this->matchFlags =
-			($matchFlags === null) ?
-				new Match(Match::NOTEMPTY) :
-				new Match($matchFlags);
+		if ($this->matchFlags === null) {
+			$this->matchFlags =
+				($matchFlags === null) ?
+					new Match(Match::NOTEMPTY) :
+					new Match($matchFlags);
+		}
 
 		if ($regexIn !== '') {
 			$this->compile($regexIn);
@@ -149,7 +153,7 @@ abstract class Pcre2Abstract
 	 * Set a new regular expression to test with.
 	 *
 	 * @param string $regex
-	 * @param $flags      OPTIONAL
+	 * @param        $flags      OPTIONAL
 	 *
 	 * @return \Diskerror\Pcre2\Pcre2Abstract
 	 * @throws \Diskerror\Pcre2\Exception

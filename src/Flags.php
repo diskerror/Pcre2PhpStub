@@ -4,7 +4,8 @@ namespace Diskerror;
 
 
 /**
- * Class Flags
+ * This class was designed to help manage the getting and setting of
+ * bit-wise flags.
  * @package Diskerror
  */
 class Flags
