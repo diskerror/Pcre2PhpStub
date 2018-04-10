@@ -149,14 +149,19 @@ abstract class Pcre2Abstract
 	 * Set a new regular expression to test with.
 	 *
 	 * @param string $regex
+	 * @param $flags      OPTIONAL
 	 *
 	 * @return \Diskerror\Pcre2\Pcre2Abstract
 	 * @throws \Diskerror\Pcre2\Exception
 	 */
-	public function setExpression(string $regex) : self
+	public function setExpression(string $regex, int $flags = null) : self
 	{
 		if ($regex === '') {
 			throw new Exception('regex string cannot be empty');
+		}
+
+		if ($flags !== null) {
+			$this->compileFlags->set($flags);
 		}
 
 		if ($regex !== $this->_regex_string) {

@@ -11,7 +11,7 @@ namespace Diskerror\Pcre2\Flags;
 
 class Replace extends Match
 {
-	//	Options available to replace method.
+	//	Additional options available to replace method.
 	const GLOBAL          = 0x00000100;  //	Replace all occurrences in the subject
 	const EXTENDED        = 0x00000200;  //	Do extended replacement processing
 	const UNSET_EMPTY     = 0x00000400;  //	Simple unset insert = empty string
