@@ -18,15 +18,16 @@ use Diskerror\Pcre2\Flags\Match;
  */
 abstract class Pcre2Abstract
 {
+	//	The flag variables are to be made public later.
 	/**
 	 * @var Flags\Compile
 	 */
-	public $compileFlags;
+	protected $compileFlags;
 
 	/**
 	 * @var Flags\Match
 	 */
-	public $matchFlags;
+	protected $matchFlags;
 
 	/**
 	 * Regular expression string.
@@ -66,16 +67,17 @@ abstract class Pcre2Abstract
 	 *
 	 * @param $expression
 	 * @param $flags      OPTIONAL
+	 *
 	 * @return Pcre2Abstract
 	 */
 	public function compile(string $expression, int $flags = null) : Pcre2Abstract
 	{
-		if ($flags !== null) {
-			$this->compileFlags->set($flags);
-		}
-
 		if ($expression === '') {
 			throw new Exception('expression cannot be empty');
+		}
+
+		if ($flags !== null) {
+			$this->compileFlags->set($flags);
 		}
 
 		//	Pcre2 will change the expression into machine code.
