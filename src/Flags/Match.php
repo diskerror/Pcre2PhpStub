@@ -9,7 +9,7 @@
 namespace Diskerror\Pcre2\Flags;
 
 
-class Match extends FlagsBase
+class Match extends Base
 {
 	//	Options available to match and replace methods.
 	const NOTBOL           = 0x00000001;    //	Subject string is not the beginning of a line

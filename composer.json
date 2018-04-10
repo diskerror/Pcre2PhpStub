@@ -22,7 +22,8 @@
     },
 	"autoload": {
 		"psr-4": {
-			"Diskerror\\Pcre2\\": "src/"
+			"Diskerror\\Pcre2\\": "src/",
+			"Diskerror\\": "src/"
 		}
 	}
 }
