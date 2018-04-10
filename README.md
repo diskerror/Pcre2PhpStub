@@ -1,7 +1,7 @@
 Version 0.3 is a work in progress. Pcre2PhpEx is still at v0.2.
 
 # PCRE2
-These are fully function stub classes for PHP which mimic the behavior of the compiled PCRE2 extension. This project starts at version 0.3 which corresponds to version 0.3 of the project Pcre2PhpEx.
+These are fully function stub classes for PHP which mimic the behavior of the compiled PCRE2 extension. This project will be tagged version 0.3 which will correspond to version 0.3 of the project Pcre2PhpEx when it set, and both versions features are set.
 
 ## Usage
 In PHP, the PCRE functions (from PHPUnit object):
