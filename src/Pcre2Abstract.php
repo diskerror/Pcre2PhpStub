@@ -22,30 +22,46 @@ abstract class Pcre2Abstract
 	/**
 	 * @var Flags\Compile
 	 */
-	protected $compileFlags;
+	public $compileFlags;
 
 	/**
 	 * @var Flags\Match
 	 */
-	protected $matchFlags;
+	public $matchFlags;
 
 	/**
 	 * Regular expression string.
 	 * @var string
 	 */
-	protected $_regex;
+	protected $_regex_string;
+
+	/**
+	 * Regular expression string.
+	 * @var bool
+	 */
+	protected $_regexStringChanged;
+
+	/**
+	 * Regular expression compiled.
+	 * @var string
+	 */
+	protected $_regex_compiled;
 
 	/**
 	 * Constructor.
 	 *
 	 * Passing "null" for the flags will set default values.
 	 *
-	 * @param string  $expression   OPTIONAL
+	 * @param string  $regexIn      OPTIONAL
 	 * @param integer $compileFlags OPTIONAL
 	 * @param integer $matchFlags   OPTIONAL
 	 */
-	public function __construct(string $expression = '', int $compileFlags = null, int $matchFlags = null)
+	public function __construct(string $regexIn = '', int $compileFlags = null, int $matchFlags = null)
 	{
+		$this->_regex_string = '';
+		$this->_regexStringChanged = false;
+		$this->_regex_compiled = '';
+
 		$this->compileFlags =
 			($compileFlags === null) ?
 				new Compile(Compile::UTF) :
@@ -56,7 +72,9 @@ abstract class Pcre2Abstract
 				new Match(Match::NOTEMPTY) :
 				new Match($matchFlags);
 
-		$this->compile($expression);
+		if ($regexIn !== '') {
+			$this->compile($regexIn);
+		}
 	}
 
 	/**
@@ -65,57 +83,93 @@ abstract class Pcre2Abstract
 	 *
 	 * Applying options here will cause any existing options to be cleared.
 	 *
-	 * @param $expression
+	 * @param $regex      OPTIONAL
 	 * @param $flags      OPTIONAL
 	 *
-	 * @return Pcre2Abstract
+	 * @return self
 	 */
-	public function compile(string $expression, int $flags = null) : Pcre2Abstract
+	public function compile(string $regex = '', int $flags = null) : self
 	{
-		if ($expression === '') {
-			throw new Exception('expression cannot be empty');
+		if ($regex !== '' && $regex !== $this->_regex_string) {
+			$this->_regex_string = $regex;
+			$this->_regexStringChanged = true;
 		}
 
 		if ($flags !== null) {
 			$this->compileFlags->set($flags);
 		}
 
-		//	Pcre2 will change the expression into machine code.
-		$this->_regex = '/' . strtr($expression, ['/' => '\\/']) . '/';
-
-		if ($this->compileFlags->hasFlag(Compile::CASELESS)) {
-			$this->_regex .= 'i';
+		if ($this->_regex_string === '') {
+			throw new Exception('regex string cannot be empty');
 		}
 
-		if ($this->compileFlags->hasFlag(Compile::MULTILINE)) {
-			$this->_regex .= 'm';
-		}
+		if ($this->_regexStringChanged || $this->compileFlags->getChanged()) {
+			$this->_regex_compiled = '/' . strtr($this->_regex_string, ['/' => '\\/']) . '/';
 
-		if ($this->compileFlags->hasFlag(Compile::DOTALL)) {
-			$this->_regex .= 's';
-		}
+			if ($this->compileFlags->hasFlag(Compile::CASELESS)) {
+				$this->_regex_compiled .= 'i';
+			}
 
-		if ($this->compileFlags->hasFlag(Compile::EXTENDED)) {
-			$this->_regex .= 'x';
-		}
+			if ($this->compileFlags->hasFlag(Compile::MULTILINE)) {
+				$this->_regex_compiled .= 'm';
+			}
 
-		if ($this->compileFlags->hasFlag(Compile::ANCHORED)) {
-			$this->_regex .= 'A';
-		}
+			if ($this->compileFlags->hasFlag(Compile::DOTALL)) {
+				$this->_regex_compiled .= 's';
+			}
 
-		if ($this->compileFlags->hasFlag(Compile::DOLLAR_ENDONLY)) {
-			$this->_regex .= 'D';
-		}
+			if ($this->compileFlags->hasFlag(Compile::EXTENDED)) {
+				$this->_regex_compiled .= 'x';
+			}
 
-		if ($this->compileFlags->hasFlag(Compile::UNGREEDY)) {
-			$this->_regex .= 'U';
-		}
+			if ($this->compileFlags->hasFlag(Compile::ANCHORED)) {
+				$this->_regex_compiled .= 'A';
+			}
 
-		if ($this->compileFlags->hasFlag(Compile::UTF)) {
-			$this->_regex .= 'u';
+			if ($this->compileFlags->hasFlag(Compile::DOLLAR_ENDONLY)) {
+				$this->_regex_compiled .= 'D';
+			}
+
+			if ($this->compileFlags->hasFlag(Compile::UNGREEDY)) {
+				$this->_regex_compiled .= 'U';
+			}
+
+			if ($this->compileFlags->hasFlag(Compile::UTF)) {
+				$this->_regex_compiled .= 'u';
+			}
+
+			$this->compileFlags->clearChanged();
+			$this->_regexStringChanged = false;
 		}
 
 		return $this;
 	}
 
+	/**
+	 * Set a new regular expression to test with.
+	 *
+	 * @param string $regex
+	 *
+	 * @return \Diskerror\Pcre2\Pcre2Abstract
+	 * @throws \Diskerror\Pcre2\Exception
+	 */
+	public function setExpression(string $regex) : self
+	{
+		if ($regex === '') {
+			throw new Exception('regex string cannot be empty');
+		}
+
+		if ($regex !== $this->_regex_string) {
+			$this->_regex_string = $regex;
+			$this->_regexStringChanged = true;
+		}
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getExpression() : string
+	{
+		return $this->_regex_string;
+	}
 }

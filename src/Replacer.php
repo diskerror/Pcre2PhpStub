@@ -9,8 +9,6 @@
 
 namespace Diskerror\Pcre2;
 
-use Diskerror\Pcre2\Pcre2Abstract;
-use Diskerror\Pcre2\Exception;
 use Diskerror\Pcre2\Flags\Replace;
 
 /**
@@ -28,14 +26,14 @@ class Replacer extends Pcre2Abstract
 	/**
 	 * Constructor.
 	 *
-	 * @param string  $expression   OPTIONAL
+	 * @param string  $regexIn      OPTIONAL
 	 * @param string  $replacement  OPTIONAL
 	 * @param integer $compileFlags OPTIONAL
 	 * @param integer $replaceFlags OPTIONAL
 	 */
-	public function __construct(string $expression = '', string $replacement = '', int $compileFlags = null, int $replaceFlags = null)
+	public function __construct(string $regexIn = '', string $replacement = '', int $compileFlags = null, int $replaceFlags = null)
 	{
-		parent::__construct($expression, $compileFlags, $replaceFlags);
+		parent::__construct($regexIn, $compileFlags, $replaceFlags);
 
 		if($replaceFlags === null){
 			$this->matchFlags->add(Replace::GLOBAL);
@@ -49,7 +47,7 @@ class Replacer extends Pcre2Abstract
 	 * @param integer $replaceFlags OPTIONAL
 	 * @return Replacer
 	 */
-	public function setReplacement(string $replacement, int $replaceFlags = null) : Replacer
+	public function setReplacement(string $replacement, int $replaceFlags = null) : self
 	{
 
 		if($replaceFlags !== null){
@@ -72,7 +70,7 @@ class Replacer extends Pcre2Abstract
 	 */
 	public function replace(string $subject, int $offset = 0) : string
 	{
-		$newString = preg_replace($this->_regex, $this->_replace, $subject, -1, $offset);
+		$newString = preg_replace($this->_regex_compiled, $this->_replace, $subject, -1, $offset);
 
 		if ($newString === null) {
 			throw new Exception('preg_replace returned "null"');

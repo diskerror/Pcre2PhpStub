@@ -9,10 +9,6 @@
 
 namespace Diskerror\Pcre2;
 
-use Diskerror\Pcre2\Pcre2Abstract;
-use Diskerror\Pcre2\FlagsAbstract;
-use Diskerror\Pcre2\Exception;
-
 /**
  * Class Matcher
  * @package Diskerror\Pcre2
@@ -32,7 +28,7 @@ class Matcher extends Pcre2Abstract
 	public function hasMatch(string $subject, int $offset = 0) : bool
 	{
 		$a = [];
-		$hasMatch = preg_match($this->_regex, $subject, $a, null, $offset);
+		$hasMatch = preg_match($this->_regex_compiled, $subject, $a, null, $offset);
 
 		if ($hasMatch === false) {
 			throw new Exception('preg_match returned "false" (an error occurred)');
@@ -54,7 +50,7 @@ class Matcher extends Pcre2Abstract
 	public function match(string $subject, int $offset = 0) : array
 	{
 		$matches = [];
-		$matchCount = preg_match($this->_regex, $subject, $matches, null, $offset);
+		$matchCount = preg_match($this->_regex_compiled, $subject, $matches, null, $offset);
 
 		if ($matchCount === false) {
 			throw new Exception('preg_match returned "false"');
@@ -76,7 +72,7 @@ class Matcher extends Pcre2Abstract
 	public function matchAll(string $subject, int $offset = 0) : array
 	{
 		$matches = [];
-		$matchCount = preg_match_all($this->_regex, $subject, $matches, PREG_PATTERN_ORDER, $offset);
+		$matchCount = preg_match_all($this->_regex_compiled, $subject, $matches, PREG_PATTERN_ORDER, $offset);
 
 		if ($matchCount === false) {
 			throw new Exception('preg_match_all returned "false"');
