@@ -12,7 +12,7 @@ class Flags
 {
 	/**
 	 * The number of bits available is platform dependent
-	 * but should be 64 bits for all instances of PHP 7.
+	 * but should be 63 bits for all instances of PHP 7.
 	 * @var int
 	 */
 	private $_flags;
@@ -103,9 +103,9 @@ class Flags
 	 *
 	 * @return bool
 	 */
-	public function hasFlag(int $whichFlag = 0xFFFFFFFF) : bool
+	public function hasFlag(int $whichFlag = 0x7FFFFFFFFFFFFFFF) : bool
 	{
-		return (bool)$this->get($whichFlag);
+		return (bool) ($this->_flags & $whichFlag);
 	}
 
 	/**
@@ -115,7 +115,7 @@ class Flags
 	 *
 	 * @return int
 	 */
-	public function get(int $whichFlag = 0xFFFFFFFF) : int
+	public function get(int $whichFlag = 0x7FFFFFFFFFFFFFFF) : int
 	{
 		return $this->_flags & $whichFlag;
 	}

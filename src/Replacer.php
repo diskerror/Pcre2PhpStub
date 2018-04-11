@@ -42,7 +42,7 @@ class Replacer extends Pcre2Abstract
 					new Replace($matchFlags);
 		}
 
-		parent::__construct($regexIn, $compileFlags, $matchFlags);
+		parent::__construct($regexIn, $compileFlags);
 	}
 
 	/**

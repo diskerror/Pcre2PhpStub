@@ -36,12 +36,6 @@ abstract class Pcre2Abstract
 	protected $_regex_string;
 
 	/**
-	 * Regular expression string.
-	 * @var bool
-	 */
-	protected $_regexStringChanged;
-
-	/**
 	 * Regular expression compiled.
 	 * @var string
 	 */
@@ -59,7 +53,6 @@ abstract class Pcre2Abstract
 	public function __construct(string $regexIn = '', int $compileFlags = null, int $matchFlags = null)
 	{
 		$this->_regex_string = '';
-		$this->_regexStringChanged = false;
 		$this->_regex_compiled = '';
 
 		if ($this->compileFlags === null) {
@@ -96,7 +89,6 @@ abstract class Pcre2Abstract
 	{
 		if ($regex !== '' && $regex !== $this->_regex_string) {
 			$this->_regex_string = $regex;
-			$this->_regexStringChanged = true;
 		}
 
 		if ($flags !== null) {
@@ -107,43 +99,38 @@ abstract class Pcre2Abstract
 			throw new Exception('regex string cannot be empty');
 		}
 
-		if ($this->_regexStringChanged || $this->compileFlags->getChanged()) {
-			$this->_regex_compiled = '/' . strtr($this->_regex_string, ['/' => '\\/']) . '/';
+		$this->_regex_compiled = '/' . strtr($this->_regex_string, ['/' => '\\/']) . '/';
 
-			if ($this->compileFlags->hasFlag(Compile::CASELESS)) {
-				$this->_regex_compiled .= 'i';
-			}
+		if ($this->compileFlags->hasFlag(Compile::CASELESS)) {
+			$this->_regex_compiled .= 'i';
+		}
 
-			if ($this->compileFlags->hasFlag(Compile::MULTILINE)) {
-				$this->_regex_compiled .= 'm';
-			}
+		if ($this->compileFlags->hasFlag(Compile::MULTILINE)) {
+			$this->_regex_compiled .= 'm';
+		}
 
-			if ($this->compileFlags->hasFlag(Compile::DOTALL)) {
-				$this->_regex_compiled .= 's';
-			}
+		if ($this->compileFlags->hasFlag(Compile::DOTALL)) {
+			$this->_regex_compiled .= 's';
+		}
 
-			if ($this->compileFlags->hasFlag(Compile::EXTENDED)) {
-				$this->_regex_compiled .= 'x';
-			}
+		if ($this->compileFlags->hasFlag(Compile::EXTENDED)) {
+			$this->_regex_compiled .= 'x';
+		}
 
-			if ($this->compileFlags->hasFlag(Compile::ANCHORED)) {
-				$this->_regex_compiled .= 'A';
-			}
+		if ($this->compileFlags->hasFlag(Compile::ANCHORED)) {
+			$this->_regex_compiled .= 'A';
+		}
 
-			if ($this->compileFlags->hasFlag(Compile::DOLLAR_ENDONLY)) {
-				$this->_regex_compiled .= 'D';
-			}
+		if ($this->compileFlags->hasFlag(Compile::DOLLAR_ENDONLY)) {
+			$this->_regex_compiled .= 'D';
+		}
 
-			if ($this->compileFlags->hasFlag(Compile::UNGREEDY)) {
-				$this->_regex_compiled .= 'U';
-			}
+		if ($this->compileFlags->hasFlag(Compile::UNGREEDY)) {
+			$this->_regex_compiled .= 'U';
+		}
 
-			if ($this->compileFlags->hasFlag(Compile::UTF)) {
-				$this->_regex_compiled .= 'u';
-			}
-
-			$this->compileFlags->clearChanged();
-			$this->_regexStringChanged = false;
+		if ($this->compileFlags->hasFlag(Compile::UTF)) {
+			$this->_regex_compiled .= 'u';
 		}
 
 		return $this;
@@ -153,7 +140,7 @@ abstract class Pcre2Abstract
 	 * Set a new regular expression to test with.
 	 *
 	 * @param string $regex
-	 * @param        $flags      OPTIONAL
+	 * @param int    $flags OPTIONAL
 	 *
 	 * @return \Diskerror\Pcre2\Pcre2Abstract
 	 * @throws \Diskerror\Pcre2\Exception
@@ -170,7 +157,6 @@ abstract class Pcre2Abstract
 
 		if ($regex !== $this->_regex_string) {
 			$this->_regex_string = $regex;
-			$this->_regexStringChanged = true;
 		}
 	}
 
