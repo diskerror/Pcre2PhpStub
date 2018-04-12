@@ -85,9 +85,9 @@ abstract class Pcre2Abstract
 	 *
 	 * @return self
 	 */
-	public function compile(string $regex = '', int $flags = null) : self
+	public function compile(string $regex = null, int $flags = null) : self
 	{
-		if ($regex !== '' && $regex !== $this->_regex_string) {
+		if ($regex !== null) {
 			$this->_regex_string = $regex;
 		}
 
@@ -137,7 +137,7 @@ abstract class Pcre2Abstract
 	}
 
 	/**
-	 * Set a new regular expression to test with.
+	 * Set a new regular expression.
 	 *
 	 * @param string $regex
 	 * @param int    $flags OPTIONAL
@@ -145,25 +145,25 @@ abstract class Pcre2Abstract
 	 * @return \Diskerror\Pcre2\Pcre2Abstract
 	 * @throws \Diskerror\Pcre2\Exception
 	 */
-	public function setExpression(string $regex, int $flags = null) : self
+	public function setRegex(string $regex, int $flags = null) : self
 	{
 		if ($regex === '') {
 			throw new Exception('regex string cannot be empty');
 		}
 
+		$this->_regex_string = $regex;
+
 		if ($flags !== null) {
 			$this->compileFlags->set($flags);
 		}
 
-		if ($regex !== $this->_regex_string) {
-			$this->_regex_string = $regex;
-		}
+		return $this;
 	}
 
 	/**
 	 * @return string
 	 */
-	public function getExpression() : string
+	public function getRegex() : string
 	{
 		return $this->_regex_string;
 	}

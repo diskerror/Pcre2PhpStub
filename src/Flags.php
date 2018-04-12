@@ -60,7 +60,7 @@ class Flags
 	}
 
 	/**
-	 * This set the bit that's set to 1 in the input parameter to zero in the stored value.
+	 * This sets the bit that's set to 1 in the input parameter to zero in the stored value.
 	 *
 	 * @param int $whichFlag
 	 *
