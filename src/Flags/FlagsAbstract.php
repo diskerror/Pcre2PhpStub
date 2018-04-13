@@ -9,7 +9,7 @@
 namespace Diskerror\Pcre2\Flags;
 
 
-abstract class Base extends \Diskerror\Flags
+abstract class FlagsAbstract extends \Diskerror\Flags
 {
 	//	Options available to all.
 	const ENDANCHORED  = 0x0000000020000000;    //	Pattern can match only at end of subject

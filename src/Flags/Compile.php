@@ -9,7 +9,7 @@
 namespace Diskerror\Pcre2\Flags;
 
 
-class Compile extends Base
+class Compile extends FlagsAbstract
 {
 	//	Options available to compile.
 	const ALLOW_EMPTY_CLASS   = 0x0000000000000001;    //	Allow empty classes
