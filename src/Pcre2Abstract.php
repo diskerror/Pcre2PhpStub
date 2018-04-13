@@ -18,13 +18,14 @@ use Diskerror\Pcre2\Flags\Match;
  */
 abstract class Pcre2Abstract
 {
-	//	The flag variables are to be made public later.
 	/**
 	 * @var Flags\Compile
 	 */
 	public $compileFlags = null;
 
 	/**
+	 * The match flags (or replace flags) are not used in this stub.
+	 *
 	 * @var Flags\Match
 	 */
 	public $matchFlags = null;
@@ -58,14 +59,14 @@ abstract class Pcre2Abstract
 		if ($this->compileFlags === null) {
 			$this->compileFlags =
 				($compileFlags === null) ?
-					new Compile(Compile::UTF) :
+					new Compile() :
 					new Compile($compileFlags);
 		}
 
 		if ($this->matchFlags === null) {
 			$this->matchFlags =
 				($matchFlags === null) ?
-					new Match(Match::NOTEMPTY) :
+					new Match() :
 					new Match($matchFlags);
 		}
 

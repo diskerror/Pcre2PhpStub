@@ -38,7 +38,7 @@ class Replacer extends Pcre2Abstract
 		if ($this->matchFlags === null) {
 			$this->matchFlags =
 				($matchFlags === null) ?
-					new Replace(Replace::NOTEMPTY | Replace::GLOBAL) :
+					new Replace() :
 					new Replace($matchFlags);
 		}
 
