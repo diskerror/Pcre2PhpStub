@@ -16,8 +16,12 @@ class Replace extends Match
 	 *
 	 * @param int $flags
 	 */
-	public function __construct(int $flags = Replace::REPLACE_DEFAULT_VALUE)
+	public function __construct(int $flags = null)
 	{
+		if ($flags === null){
+			$flags = Replace::NOTEMPTY | Replace::GLOBAL;
+		}
+
 		FlagsAbstract::__construct($flags);
 	}
 
@@ -28,6 +32,4 @@ class Replace extends Match
 	const UNSET_EMPTY     = 0x0000000000000400;  //	Simple unset insert = empty string
 	const UNKNOWN_UNSET   = 0x0000000000000800;  //	Treat unknown group as unset
 //	const OVERFLOW_LENGTH = 0x0000000000001000;  //	If overflow, compute needed length   ???
-
-	const REPLACE_DEFAULT_VALUE = Replace::NOTEMPTY | Replace::GLOBAL;
 }
