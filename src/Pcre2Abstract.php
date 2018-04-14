@@ -81,12 +81,12 @@ abstract class Pcre2Abstract
 	 *
 	 * Applying options here will cause any existing options to be cleared.
 	 *
-	 * @param \Diskerror\Pcre2\OPTIONAL|string|null $regex
-	 * @param \Diskerror\Pcre2\OPTIONAL|int|null    $compileFlags
-	 * @param int|null                              $matchFlags
+	 * @param null|string $regex
+	 * @param int|null    $compileFlags
+	 * @param int|null    $matchFlags
 	 *
 	 * @return \Diskerror\Pcre2\Pcre2Abstract
-	 * @throws \Diskerror\Pcre2\Exception
+	 * @throws \Exception
 	 */
 	public function compile(string $regex = null, int $compileFlags = null, int $matchFlags = null) : self
 	{
@@ -103,7 +103,7 @@ abstract class Pcre2Abstract
 		}
 
 		if ($this->_regex_string === '') {
-			throw new Exception('regex string cannot be empty');
+			throw new \Exception('regex string cannot be empty');
 		}
 
 		$this->_regex_compiled = '/' . strtr($this->_regex_string, ['/' => '\\/']) . '/';
@@ -155,7 +155,7 @@ abstract class Pcre2Abstract
 	public function setRegex(string $regex, int $compileFlags = null, int $matchFlags = null) : self
 	{
 		if ($regex === '') {
-			throw new Exception('regex string cannot be empty');
+			throw new \Exception('regex string cannot be empty');
 		}
 
 		$this->_regex_string = $regex;

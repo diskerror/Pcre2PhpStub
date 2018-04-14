@@ -59,7 +59,7 @@ class Replacer extends Pcre2Abstract
 		$newString = preg_replace($this->_regex_compiled, $this->_replacement, $subject, -1, $offset);
 
 		if ($newString === null) {
-			throw new Exception('preg_replace returned "null"');
+			throw new \Exception('preg_replace returned null');
 		}
 
 		return $newString;

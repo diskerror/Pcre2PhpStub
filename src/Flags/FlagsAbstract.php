@@ -49,7 +49,7 @@ abstract class FlagsAbstract
 	 *
 	 * @param int $whichFlag
 	 *
-	 * @return \Diskerror\Flags
+	 * @return Diskerror\Flags\FlagsAbstract
 	 */
 	public function add(int $whichFlag) : self
 	{
@@ -75,7 +75,7 @@ abstract class FlagsAbstract
 	 *
 	 * @param int $whichFlag
 	 *
-	 * @return \Diskerror\Flags
+	 * @return Diskerror\Flags\FlagsAbstract
 	 */
 	public function remove(int $whichFlag) : self
 	{
@@ -86,7 +86,7 @@ abstract class FlagsAbstract
 	/**
 	 * Set all flags to zero or false;
 	 *
-	 * @return \Diskerror\Flags
+	 * @return Diskerror\Flags\FlagsAbstract
 	 */
 	public function clear() : self
 	{
@@ -99,7 +99,7 @@ abstract class FlagsAbstract
 	 *
 	 * @param int $flags
 	 *
-	 * @return \Diskerror\Flags
+	 * @return Diskerror\Flags\FlagsAbstract
 	 */
 	public function set(int $flags) : self
 	{
@@ -145,7 +145,7 @@ abstract class FlagsAbstract
 	/**
 	 * Marks flags as unchanged so that we can detect new changes.
 	 *
-	 * @return \Diskerror\Flags
+	 * @return Diskerror\Flags\FlagsAbstract
 	 */
 	public function clearChanged() : self
 	{

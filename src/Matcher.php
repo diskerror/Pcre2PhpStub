@@ -31,7 +31,7 @@ class Matcher extends Pcre2Abstract
 		$hasMatch = preg_match($this->_regex_compiled, $subject, $a, null, $offset);
 
 		if ($hasMatch === false) {
-			throw new Exception('preg_match returned "false" (an error occurred)');
+			throw new \Exception('preg_match returned "false" (an error occurred)');
 		}
 		//	Else $hasMatch is a 0 or 1.
 
@@ -53,7 +53,7 @@ class Matcher extends Pcre2Abstract
 		$matchCount = preg_match($this->_regex_compiled, $subject, $matches, null, $offset);
 
 		if ($matchCount === false) {
-			throw new Exception('preg_match returned "false"');
+			throw new \Exception('preg_match returned "false"');
 		}
 		//	Else $hasMatch is a 0 or 1.
 
@@ -75,7 +75,7 @@ class Matcher extends Pcre2Abstract
 		$matchCount = preg_match_all($this->_regex_compiled, $subject, $matches, PREG_PATTERN_ORDER, $offset);
 
 		if ($matchCount === false) {
-			throw new Exception('preg_match_all returned "false"');
+			throw new \Exception('preg_match_all returned "false"');
 		}
 
 		return $matches;
