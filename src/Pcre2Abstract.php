@@ -81,19 +81,25 @@ abstract class Pcre2Abstract
 	 *
 	 * Applying options here will cause any existing options to be cleared.
 	 *
-	 * @param $regex      OPTIONAL
-	 * @param $flags      OPTIONAL
+	 * @param \Diskerror\Pcre2\OPTIONAL|string|null $regex
+	 * @param \Diskerror\Pcre2\OPTIONAL|int|null    $compileFlags
+	 * @param int|null                              $matchFlags
 	 *
-	 * @return self
+	 * @return \Diskerror\Pcre2\Pcre2Abstract
+	 * @throws \Diskerror\Pcre2\Exception
 	 */
-	public function compile(string $regex = null, int $flags = null) : self
+	public function compile(string $regex = null, int $compileFlags = null, int $matchFlags = null) : self
 	{
 		if ($regex !== null) {
 			$this->_regex_string = $regex;
 		}
 
-		if ($flags !== null) {
-			$this->compileFlags->set($flags);
+		if ($compileFlags !== null) {
+			$this->compileFlags->set($compileFlags);
+		}
+
+		if ($matchFlags !== null) {
+			$this->compileFlags->set($matchFlags);
 		}
 
 		if ($this->_regex_string === '') {
@@ -141,12 +147,12 @@ abstract class Pcre2Abstract
 	 * Set a new regular expression.
 	 *
 	 * @param string $regex
-	 * @param int    $flags OPTIONAL
+	 * @param int    $compileFlags OPTIONAL
 	 *
 	 * @return \Diskerror\Pcre2\Pcre2Abstract
 	 * @throws \Diskerror\Pcre2\Exception
 	 */
-	public function setRegex(string $regex, int $flags = null) : self
+	public function setRegex(string $regex, int $compileFlags = null, int $matchFlags = null) : self
 	{
 		if ($regex === '') {
 			throw new Exception('regex string cannot be empty');
@@ -154,8 +160,12 @@ abstract class Pcre2Abstract
 
 		$this->_regex_string = $regex;
 
-		if ($flags !== null) {
-			$this->compileFlags->set($flags);
+		if ($compileFlags !== null) {
+			$this->compileFlags->set($compileFlags);
+		}
+
+		if ($matchFlags !== null) {
+			$this->matchFlags->set($matchFlags);
 		}
 
 		return $this;

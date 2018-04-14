@@ -81,7 +81,6 @@ class Replacer extends Pcre2Abstract
 	 */
 	public function setReplacement(string $replacement, int $replaceFlags = null) : self
 	{
-
 		if ($replaceFlags !== null) {
 			$this->matchFlags->set($replaceFlags);
 		}
