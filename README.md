@@ -31,3 +31,5 @@ $this->assertTrue($result);
 $matches = $matcher->match($subject);  //  "$matcher" from above
 $this->assertEquals($matches, ['a']);
 ```
+## Flags
+The Flags class is not used in the PCRE2 class as neither PHP-CPP nor Zephir can handle nested classes, where a class property is a class. The compiler and matcher flags have been exposed as integers.

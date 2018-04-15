@@ -35,14 +35,12 @@ class Replacer extends Pcre2Abstract
 	{
 		$this->setReplacement($replacement);
 
-		if ($this->matchFlags === null) {
-			$this->matchFlags =
-				($matchFlags === null) ?
-					new Replace() :
-					new Replace($matchFlags);
-		}
+		$this->matchFlags |=
+			($matchFlags === null) ?
+				Replace::GLOBAL :
+				$matchFlags;
 
-		parent::__construct($regexIn, $compileFlags);
+		parent::__construct($regexIn, $compileFlags, $matchFlags);
 	}
 
 	/**
@@ -82,7 +80,7 @@ class Replacer extends Pcre2Abstract
 	public function setReplacement(string $replacement, int $replaceFlags = null) : self
 	{
 		if ($replaceFlags !== null) {
-			$this->matchFlags->set($replaceFlags);
+			$this->matchFlags = $replaceFlags;
 		}
 
 		$this->_replacement = $replacement;

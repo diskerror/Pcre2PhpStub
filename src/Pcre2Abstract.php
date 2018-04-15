@@ -2,6 +2,10 @@
 /**
  * Functional stub for Pcre2PhpEx compiled extension.
  * The extension preprocesses the REGEX string.
+ *
+ * Neither PHP-CPP nor Zephir can handle nested classes (a class with a property that is also a class)
+ * so the compile and match flags are exposed as integers.
+ *
  * @name           Pcre2Abstract
  * @copyright      Copyright (c) 2018 Reid Woodbury Jr.
  * @license        http://www.apache.org/licenses/LICENSE-2.0.html	Apache License, Version 2.0
@@ -11,6 +15,7 @@ namespace Diskerror\Pcre2;
 
 use Diskerror\Pcre2\Flags\Compile;
 use Diskerror\Pcre2\Flags\Match;
+use Exception;
 
 /**
  * Class Pcre2Abstract
@@ -19,16 +24,14 @@ use Diskerror\Pcre2\Flags\Match;
 abstract class Pcre2Abstract
 {
 	/**
-	 * @var Flags\Compile
+	 * @var integer
 	 */
-	public $compileFlags = null;
+	protected $compileFlags = 0;
 
 	/**
-	 * The match flags (or replace flags) are not used in this stub.
-	 *
-	 * @var Flags\Match
+	 * @var integer
 	 */
-	public $matchFlags = null;
+	protected $matchFlags = 0;
 
 	/**
 	 * Regular expression string.
@@ -56,22 +59,56 @@ abstract class Pcre2Abstract
 		$this->_regex_string = '';
 		$this->_regex_compiled = '';
 
-		if ($this->compileFlags === null) {
-			$this->compileFlags =
-				($compileFlags === null) ?
-					new Compile() :
-					new Compile($compileFlags);
-		}
+		$this->compileFlags |=
+			($compileFlags === null) ?
+				Compile::UTF :
+				$compileFlags;
 
-		if ($this->matchFlags === null) {
-			$this->matchFlags =
-				($matchFlags === null) ?
-					new Match() :
-					new Match($matchFlags);
-		}
+		$this->matchFlags |=
+			($matchFlags === null) ?
+				Match::NOTEMPTY :
+				$matchFlags;
 
 		if ($regexIn !== '') {
 			$this->compile($regexIn);
+		}
+	}
+
+	/**
+	 * @param $name
+	 *
+	 * @return mixed
+	 * @throws \Exception
+	 */
+	public function __get($name)
+	{
+		switch ($name) {
+			case 'compileFlags':
+			case 'matchFlags':
+				return $$name;
+			break;
+
+			default:
+				throw new \Exception('no such property name');
+		}
+	}
+
+	/**
+	 * @param $name
+	 * @param $value
+	 *
+	 * @throws \Exception
+	 */
+	public function __set($name, $value)
+	{
+		switch ($name) {
+			case 'compileFlags':
+			case 'matchFlags':
+				$this->$name = (int) $$name;
+			break;
+
+			default:
+				throw new \Exception('no such property name');
 		}
 	}
 
@@ -95,11 +132,11 @@ abstract class Pcre2Abstract
 		}
 
 		if ($compileFlags !== null) {
-			$this->compileFlags->set($compileFlags);
+			$this->compileFlags = $compileFlags;
 		}
 
 		if ($matchFlags !== null) {
-			$this->compileFlags->set($matchFlags);
+			$this->matchFlags = $matchFlags;
 		}
 
 		if ($this->_regex_string === '') {
@@ -108,35 +145,35 @@ abstract class Pcre2Abstract
 
 		$this->_regex_compiled = '/' . strtr($this->_regex_string, ['/' => '\\/']) . '/';
 
-		if ($this->compileFlags->hasFlag(Compile::CASELESS)) {
+		if ($this->compileFlags & Compile::CASELESS) {
 			$this->_regex_compiled .= 'i';
 		}
 
-		if ($this->compileFlags->hasFlag(Compile::MULTILINE)) {
+		if ($this->compileFlags & Compile::MULTILINE) {
 			$this->_regex_compiled .= 'm';
 		}
 
-		if ($this->compileFlags->hasFlag(Compile::DOTALL)) {
+		if ($this->compileFlags & Compile::DOTALL) {
 			$this->_regex_compiled .= 's';
 		}
 
-		if ($this->compileFlags->hasFlag(Compile::EXTENDED)) {
+		if ($this->compileFlags & Compile::EXTENDED) {
 			$this->_regex_compiled .= 'x';
 		}
 
-		if ($this->compileFlags->hasFlag(Compile::ANCHORED)) {
+		if ($this->compileFlags & Compile::ANCHORED) {
 			$this->_regex_compiled .= 'A';
 		}
 
-		if ($this->compileFlags->hasFlag(Compile::DOLLAR_ENDONLY)) {
+		if ($this->compileFlags & Compile::DOLLAR_ENDONLY) {
 			$this->_regex_compiled .= 'D';
 		}
 
-		if ($this->compileFlags->hasFlag(Compile::UNGREEDY)) {
+		if ($this->compileFlags & Compile::UNGREEDY) {
 			$this->_regex_compiled .= 'U';
 		}
 
-		if ($this->compileFlags->hasFlag(Compile::UTF)) {
+		if ($this->compileFlags & Compile::UTF) {
 			$this->_regex_compiled .= 'u';
 		}
 
@@ -161,11 +198,11 @@ abstract class Pcre2Abstract
 		$this->_regex_string = $regex;
 
 		if ($compileFlags !== null) {
-			$this->compileFlags->set($compileFlags);
+			$this->compileFlags = $compileFlags;
 		}
 
 		if ($matchFlags !== null) {
-			$this->matchFlags->set($matchFlags);
+			$this->matchFlags = $matchFlags;
 		}
 
 		return $this;
