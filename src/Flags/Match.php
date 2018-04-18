@@ -11,17 +11,6 @@ namespace Diskerror\Pcre2\Flags;
 
 class Match extends FlagsAbstract
 {
-	/**
-	 * Flags constructor.
-	 *
-	 * @param int $flags
-	 */
-	public function __construct(int $flags = Match::NOTEMPTY)
-	{
-		FlagsAbstract::__construct($flags);
-	}
-
-
 	//	Options available to match and replace methods.
 	const NOTBOL           = 0x0000000000000001;    //	Subject string is not the beginning of a line
 	const NOTEOL           = 0x0000000000000002;    //	Subject string is not the end of a line

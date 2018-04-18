@@ -11,17 +11,6 @@ namespace Diskerror\Pcre2\Flags;
 
 class Compile extends FlagsAbstract
 {
-	/**
-	 * Flags constructor.
-	 *
-	 * @param int $flags
-	 */
-	public function __construct(int $flags = Compile::UTF)
-	{
-		FlagsAbstract::__construct($flags);
-	}
-
-
 	//	Options available to compile.
 	const ALLOW_EMPTY_CLASS   = 0x0000000000000001;    //	Allow empty classes
 	const ALT_BSUX            = 0x0000000000000002;    //	Alternative handling of \u, \U, and \x

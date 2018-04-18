@@ -11,21 +11,6 @@ namespace Diskerror\Pcre2\Flags;
 
 class Replace extends Match
 {
-	/**
-	 * Flags constructor.
-	 *
-	 * @param int $flags
-	 */
-	public function __construct(int $flags = null)
-	{
-		if ($flags === null){
-			$flags = Replace::NOTEMPTY | Replace::GLOBAL;
-		}
-
-		FlagsAbstract::__construct($flags);
-	}
-
-
 	//	Additional options available to replace method.
 	const GLOBAL          = 0x0000000000000100;  //	Replace all occurrences in the subject
 	const EXTENDED        = 0x0000000000000200;  //	Do extended replacement processing
