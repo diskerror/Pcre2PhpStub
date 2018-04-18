@@ -1,7 +1,5 @@
-Version 0.3 is a work in progress. Pcre2PhpEx is still at v0.2.
-
-# PCRE2
-These are fully function stub classes for PHP which mimic the behavior of the compiled PCRE2 extension. This project will be tagged version 0.3 which will correspond to version 0.3 of the project Pcre2PhpEx when it set, and both versions features are set.
+# PCRE2 stubs
+These are fully function stub classes for PHP which mimic the behavior of the compiled PCRE2 extension.
 
 ## Usage
 In PHP, the PCRE functions (from PHPUnit object):
@@ -17,19 +15,18 @@ $matches = [];
 $result = preg_match('/a/u', $subject, $matches);  //  1
 $this->assertEquals($matches, ['a']);
 ```
-are equivalent to this in this PCRE2 implimentation:
+are equivalent to the following in the PCRE2 implimentation:
 ```
+//  UTF is the default
 $subject = 'abacadabra';
-$replacer = new \Diskerror\Pcre2\Replacer('a', ' ', \Diskerror\Pcre2::UTF);
+$replacer = new \Diskerror\Pcre2\Replacer('a', ' ');
 $result = $replacer->replace($subject);
 $this->assertEquals($result, ' b c d br ');
 
-$matcher = new \Diskerror\Pcre2\Matcher('a', \Diskerror\Pcre2::UTF);
+$matcher = new \Diskerror\Pcre2\Matcher('a');
 $result = $matcher->hasMatch($subject);
 $this->assertTrue($result);
 
 $matches = $matcher->match($subject);  //  "$matcher" from above
 $this->assertEquals($matches, ['a']);
 ```
-## Flags
-The Flags class is not used in the PCRE2 class as neither PHP-CPP nor Zephir can handle nested classes, where a class property is a class. The compiler and matcher flags have been exposed as integers.
