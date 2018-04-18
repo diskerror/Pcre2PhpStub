@@ -72,7 +72,7 @@ class Matcher extends Pcre2Abstract
 	public function matchAll(string $subject, int $offset = 0) : array
 	{
 		$matches = [];
-		$matchCount = preg_match_all($this->_regex_compiled, $subject, $matches, PREG_PATTERN_ORDER, $offset);
+		$matchCount = preg_match_all($this->_regex_compiled, $subject, $matches, PREG_SET_ORDER, $offset);
 
 		if ($matchCount === false) {
 			throw new \Exception('preg_match_all returned "false"');
