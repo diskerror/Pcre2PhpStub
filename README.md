@@ -1,8 +1,8 @@
 # PCRE2 stubs
-These are fully function stub classes for PHP which mimic the behavior of the compiled PCRE2 extension.
+These are fully function stub classes for PHP which mimic the behavior of the compiled [PCRE2 extension](https://github.com/diskerror/Pcre2PhpEx).
 
 ## Usage
-In PHP, the PCRE functions (from PHPUnit object):
+In PHP, the PCRE functions (from PHPUnit test code):
 ```
 $subject = 'abacadabra';
 $result = preg_replace('/a/u', ' ', $subject);
