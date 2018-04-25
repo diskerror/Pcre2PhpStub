@@ -215,4 +215,11 @@ abstract class Pcre2Abstract
 	{
 		return $this->_regex_string;
 	}
+
+	/**
+	 * For testing.
+	 */
+	public static function whatAmI(){
+		return 'stub';
+	}
 }

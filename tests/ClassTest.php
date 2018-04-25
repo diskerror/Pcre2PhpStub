@@ -61,7 +61,10 @@ class ClassTest extends PHPUnit\Framework\TestCase
 
 	public function testLong()
 	{
+		echo "\nRunning as ", Diskerror\Pcre2\Pcre2Abstract::whatAmI(), ".\n";
+
 		ob_start();
+
 		$start = microtime(true);
 
 		$subject = 'abacadabra';
@@ -79,17 +82,17 @@ class ClassTest extends PHPUnit\Framework\TestCase
 		$subject2 = 'abacadabra abacadabre abacadabro';
 		$m2 = new Diskerror\Pcre2\Matcher('(a)(ba)(ca).*?(br.)');
 		$matches = $m2->match($subject2);
-		print_r($matches);	//	Array([0] => abacadabra, [1] => a, [2] => ba, [3] => ca, [4] => bra)
+		print_r($matches);    //	Array([0] => abacadabra, [1] => a, [2] => ba, [3] => ca, [4] => bra)
 
 		$m2 = new Diskerror\Pcre2\Matcher('(a)(ba)(ca).*?(br.)');
 		$matches = $m2->matchAll($subject2);
-		print_r($matches);	//	output see below
+		print_r($matches);    //	output see below
 
-		printf("microseconds: %.6f\n", (microtime(true) - $start)*1000000);
+		printf("microseconds: %.6f\n", (microtime(true) - $start) * 1000000);
 
 		ob_end_flush();
 
-		$this->assertEquals(true, true);
+		$this->assertTrue(true);
 	}
 
 }
